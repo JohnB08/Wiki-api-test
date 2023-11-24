@@ -21,11 +21,8 @@ const scoreCount = makeElements("p", { textContent: `score: ${score}` });
 document.body.append(scoreCount);
 const pages = {};
 pages.pageLength = [];
-const baseUrl =
-  "https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json";
 const randomUrl =
   "https://en.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&grnlimit=2&prop=info|pageimages&piprop=original&origin=*&format=json";
-const imageUrl = "https://commons.wikimedia.org/wiki/";
 const wikiPages = async () => {
   pages.result = await fetchWikiEntry(randomUrl);
   printTitleAndImage();
@@ -47,8 +44,12 @@ const printTitleAndImage = () => {
         src: currentPageObject[page].original.source,
       });
       pageContainer.appendChild(image);
+    } else {
+      const image = makeElements("img", {
+        src: "https://random-d.uk/api/v2/randomimg",
+      });
+      pageContainer.appendChild(image);
     }
-
     bothPages.appendChild(pageContainer);
   });
   const gameElements = makeElements("div", { className: "gameElements" });
