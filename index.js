@@ -93,6 +93,7 @@ const removeElements = () => {
   pages.gameElements.divs.forEach((div) => div.remove());
   pages.gameElements.question.remove();
   pages.gameElements.answerText.remove();
+  pages.pageLength = [];
   refreshBtn.remove();
   wikiPages();
 };
