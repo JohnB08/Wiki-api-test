@@ -16,7 +16,9 @@ const makeElements = (type, properties) => {
   });
   return element;
 };
-
+let score = 0;
+const scoreCount = makeElements("p", { textContent: `score: ${score}` });
+document.body.append(scoreCount);
 const pages = {};
 pages.pageLength = [];
 const baseUrl =
@@ -64,6 +66,7 @@ const printTitleAndImage = () => {
   );
   document.body.appendChild(bothPages);
   pages.gameElements = {
+    divs: [gameElements, bothPages],
     buttons: [leftBtn, rightBtn],
     answerText: answer,
   };
@@ -71,10 +74,23 @@ const printTitleAndImage = () => {
   gameElements.append(leftBtn, rightBtn);
 };
 const refreshBtn = makeElements("button", { textContent: "Try Again!" });
-refreshBtn.addEventListener("click", () => location.reload());
+refreshBtn.addEventListener("click", () => removeElements());
 const lengthCompare = (a, b) => {
-  if (a > b) pages.gameElements.answerText.textContent = "yes!";
-  else pages.gameElements.answerText.textContent = "no!";
+  if (a > b) {
+    pages.gameElements.answerText.textContent = "yes!";
+    score++;
+  } else {
+    pages.gameElements.answerText.textContent = "no!";
+    score = 0;
+  }
+  scoreCount.textContent = `score: ${score}`;
   pages.gameElements.buttons.forEach((button) => button.remove());
   document.body.append(refreshBtn);
+};
+
+const removeElements = () => {
+  pages.gameElements.divs.forEach((div) => div.remove());
+  pages.gameElements.answerText.remove();
+  refreshBtn.remove();
+  wikiPages();
 };
