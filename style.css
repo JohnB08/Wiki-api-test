@@ -1,0 +1,25 @@
+body {
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+}
+.pageContainer img {
+  max-width: 300px;
+  aspect-ratio: auto;
+}
+.pageContainer h3 {
+  width: 300px;
+}
+.wikiContainer {
+  display: flex;
+  gap: 20px;
+}
+.gameElements {
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+}
