@@ -8,6 +8,13 @@ const fetchWikiEntry = async (url) => {
   }
 };
 
+const setDogImage = async () => {
+  url = await fetchWikiEntry("https://random.dog/woof.json");
+  if (url.url.includes(".mp4")) {
+    return setDogImage();
+  } else return url;
+};
+
 const makeElements = (type, properties) => {
   const element = document.createElement(type);
   Object.entries(properties).forEach((property) => {
@@ -29,7 +36,7 @@ const randomUrl =
   "https://en.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&grnlimit=2&prop=info|pageimages&piprop=original&origin=*&format=json";
 const wikiPages = async () => {
   pages.result = await fetchWikiEntry(randomUrl);
-  pages.image = await fetchWikiEntry("https://random.dog/woof.json");
+  pages.image = await setDogImage();
   printTitleAndImage();
   console.log(pages);
 };
