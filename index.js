@@ -68,6 +68,7 @@ const printTitleAndImage = () => {
   pages.gameElements = {
     divs: [gameElements, bothPages],
     buttons: [leftBtn, rightBtn],
+    question: gameQuery,
     answerText: answer,
   };
   document.body.append(gameQuery, gameElements, answer);
@@ -90,6 +91,7 @@ const lengthCompare = (a, b) => {
 
 const removeElements = () => {
   pages.gameElements.divs.forEach((div) => div.remove());
+  pages.gameElements.question.remove();
   pages.gameElements.answerText.remove();
   refreshBtn.remove();
   wikiPages();
