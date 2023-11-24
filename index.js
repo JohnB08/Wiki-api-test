@@ -19,12 +19,17 @@ const makeElements = (type, properties) => {
 let score = 0;
 const scoreCount = makeElements("p", { textContent: `score: ${score}` });
 document.body.append(scoreCount);
+const gameQuery = makeElements("h3", {
+  textContent: "Which side is the longer article?",
+});
+document.body.append(gameQuery);
 const pages = {};
 pages.pageLength = [];
 const randomUrl =
   "https://en.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&grnlimit=2&prop=info|pageimages&piprop=original&origin=*&format=json";
 const wikiPages = async () => {
   pages.result = await fetchWikiEntry(randomUrl);
+  pages.image = await fetchWikiEntry("https://random.dog/woof.json");
   printTitleAndImage();
   console.log(pages);
 };
@@ -46,16 +51,13 @@ const printTitleAndImage = () => {
       pageContainer.appendChild(image);
     } else {
       const image = makeElements("img", {
-        src: "https://random-d.uk/api/v2/randomimg",
+        src: pages.image.url,
       });
       pageContainer.appendChild(image);
     }
     bothPages.appendChild(pageContainer);
   });
   const gameElements = makeElements("div", { className: "gameElements" });
-  const gameQuery = makeElements("h3", {
-    textContent: "Which side is the longer article?",
-  });
   const leftBtn = makeElements("button", { textContent: "Left!" });
   const rightBtn = makeElements("button", { textContent: "Right!" });
   const answer = makeElements("h3", { textContent: "" });
@@ -72,7 +74,7 @@ const printTitleAndImage = () => {
     question: gameQuery,
     answerText: answer,
   };
-  document.body.append(gameQuery, gameElements, answer);
+  document.body.append(gameElements, answer);
   gameElements.append(leftBtn, rightBtn);
 };
 const refreshBtn = makeElements("button", { textContent: "Try Again!" });
@@ -92,7 +94,6 @@ const lengthCompare = (a, b) => {
 
 const removeElements = () => {
   pages.gameElements.divs.forEach((div) => div.remove());
-  pages.gameElements.question.remove();
   pages.gameElements.answerText.remove();
   pages.pageLength = [];
   refreshBtn.remove();
